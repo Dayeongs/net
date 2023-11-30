@@ -10,22 +10,23 @@ import java.util.Map;
 public class Client {
 	
 	private Map<Integer, Handler> map = new HashMap<>();
+	// 필요한 객체를 직접 생성
 	private Scanner scanner = new Scanner(System.in);
 	private Socket socket;
 	private DataInputStream in;
 	private DataOutputStream out;
 	
 	public Client() {
-		// Map 객체에 메뉴별 핸들러객체를 저장한다.
+		// 메뉴번호를 key, Handler 구현 객체를 value로 구성해서 Map 객체에 저장
+		// -> Map 객체에 메뉴별 Handler 객체를 저장한다.
 		// ClientXXXHandler 객체가 클래스형변환되어서 Handler 타입으로 변환되어 Map에 저장된다.
 		/*
 		 * Map<Integer, Handler>
-		 * 
 		 * 	[key: 정수, value: Handler타입 객체의 주소값]
 		 */
 		map.put(Cmd.MENU_LIST, new ClientFileListHandler());
 		map.put(Cmd.MENU_DOWNLOAD, new ClientFileDownloadHandler(scanner));
-		map.put(Cmd.MENU_UPLOAD, new ClientFileUploadHandler());
+		map.put(Cmd.MENU_UPLOAD, new ClientFileUploadHandler(scanner));
 		map.put(Cmd.MENU_EXIT, new ClientExitHandler());
 	}
 	
